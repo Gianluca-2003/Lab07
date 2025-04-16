@@ -1,7 +1,7 @@
 import flet as ft
 
 from UI.view import View
-from model.model import Model
+from model.modello import Model
 
 
 class Controller:
@@ -31,12 +31,15 @@ class Controller:
         if self._mese == 0:
             self._view.create_alert("Seleziona un mese prima di procedere")
             return
-        localita = self._model.getUmiditaMesePrimiGiorni(self._mese)
-        #print(localita)
-        percorsi = self._model.calcolaPercorsoMinimoCosto(localita)
-        #print(percorsi)
-        self._view.lst_result.controls.append(ft.Text(f"Il costo è {percorsi[0]}"))
+        costo, sequenza = self._model.calcolaSequenza(self._mese)
+        self._view.lst_result.controls.append(ft.Text(f"La seuqnza ottima ha costo {costo} ed é:"))
+        for situazione in sequenza:
+            self._view.lst_result.controls.append(ft.Text(str(situazione)))
         self._view.update_page()
+
+
+
+
 
 
 
